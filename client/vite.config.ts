@@ -7,9 +7,20 @@ import { config } from "dotenv";
 
 config({ path: path.resolve(__dirname, "../.env") });
 
+// Log the API URL being used
+console.log(
+    "\x1b[36m%s\x1b[0m",
+    `Using API Base URL: ${process.env.VITE_API_BASE_URL || "http://localhost:3000"}`
+);
+
 // https://vite.dev/config/
 export default defineConfig({
     plugins: [wasm(), topLevelAwait(), react()],
+    define: {
+        "import.meta.env.VITE_API_BASE_URL": JSON.stringify(
+            process.env.VITE_API_BASE_URL || "http://localhost:3000"
+        ),
+    },
     optimizeDeps: {
         exclude: ["onnxruntime-node", "@anush008/tokenizers"],
     },

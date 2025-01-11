@@ -6,6 +6,7 @@ import { ImageIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./App.css";
+import { API_BASE } from "@/config";
 
 export default function Chat() {
     const { agentId } = useParams();
@@ -81,7 +82,7 @@ export default function Chat() {
                                                     ? attachment.url
                                                     : attachment.url.startsWith('http')
                                                         ? attachment.url
-                                                        : `http://localhost:3000/media/generated/${attachment.url.split('/').pop()}`
+                                                        : `${API_BASE}/media/generated/${attachment.url.split('/').pop()}`
                                                 }
                                                 alt={attachment.title || "Attached image"}
                                                 className="mt-2 max-w-full rounded-lg"
