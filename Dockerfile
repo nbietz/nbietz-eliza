@@ -22,6 +22,7 @@ COPY agent ./agent
 COPY packages ./packages
 COPY scripts ./scripts
 COPY characters ./characters
+COPY client ./client
 
 # Install dependencies and build the project
 RUN pnpm install \
@@ -38,6 +39,9 @@ RUN npm install -g pnpm@9.4.0 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Expose Vite's default port
+EXPOSE 5173
+
 WORKDIR /app
 
 # Copy built artifacts and production dependencies from the builder stage
@@ -50,6 +54,7 @@ COPY --from=builder /app/agent ./agent
 COPY --from=builder /app/packages ./packages
 COPY --from=builder /app/scripts ./scripts
 COPY --from=builder /app/characters ./characters
+COPY --from=builder /app/client ./client
 
 # Set the command to run the application
 CMD ["pnpm", "start"]
