@@ -42,6 +42,9 @@ RUN npm install -g pnpm@9.4.0 && \
 # Expose Vite's default port
 EXPOSE 5173
 
+# Expose the API port
+EXPOSE 3000
+
 WORKDIR /app
 
 # Copy built artifacts and production dependencies from the builder stage
@@ -56,5 +59,5 @@ COPY --from=builder /app/scripts ./scripts
 COPY --from=builder /app/characters ./characters
 COPY --from=builder /app/client ./client
 
-# Set the command to run the application
-CMD ["pnpm", "start"]
+# Run both the API and client
+CMD ["sh", "-c", "pnpm start:client & pnpm start"]
