@@ -35,6 +35,7 @@ services:
             - WALLET_SECRET_SALT=secret_salt
         ports:
             - "3000:3000"
+            - "5173:5173"
         restart: always
 
 volumes:
