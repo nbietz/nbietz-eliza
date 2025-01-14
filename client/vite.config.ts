@@ -1,11 +1,6 @@
-import path from "path";
 import { defineConfig } from "vite";
-import topLevelAwait from "vite-plugin-top-level-await";
-import react from "@vitejs/plugin-react";
-import wasm from "vite-plugin-wasm";
-import { config } from "dotenv";
-
-config({ path: path.resolve(__dirname, "../.env") });
+import react from "@vitejs/plugin-react-swc";
+import viteCompression from "vite-plugin-compression";
 
 // Log the API URL being used
 console.log(
@@ -15,26 +10,30 @@ console.log(
 
 // https://vite.dev/config/
 export default defineConfig({
-    plugins: [wasm(), topLevelAwait(), react()],
+    plugins: [
+        react(),
+        viteCompression({
+            algorithm: "brotliCompress",
+            ext: ".br",
+            threshold: 1024,
+        }),
+    ],
     define: {
         "import.meta.env.VITE_API_BASE_URL": JSON.stringify(
             process.env.VITE_API_BASE_URL || "http://localhost:3000"
         ),
     },
-    optimizeDeps: {
-        exclude: ["onnxruntime-node", "@anush008/tokenizers"],
-    },
+    clearScreen: false,
     build: {
-        commonjsOptions: {
-            exclude: ["onnxruntime-node", "@anush008/tokenizers"],
-        },
-        rollupOptions: {
-            external: ["onnxruntime-node", "@anush008/tokenizers"],
-        },
+        outDir: "dist",
+        minify: true,
+        cssMinify: true,
+        sourcemap: false,
+        cssCodeSplit: true,
     },
     resolve: {
         alias: {
-            "@": path.resolve(__dirname, "./src"),
+            "@": "/src",
         },
     },
     server: {
