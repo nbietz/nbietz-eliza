@@ -3,6 +3,9 @@ FROM node:23.3.0-slim AS builder
 
 # Install pnpm globally and necessary build tools
 RUN npm install -g pnpm@9.4.0 && \
+    echo "Acquire::http::Pipeline-Depth 0;" > /etc/apt/apt.conf.d/99custom && \
+    echo "Acquire::http::No-Cache true;" >> /etc/apt/apt.conf.d/99custom && \
+    echo "Acquire::BrokenProxy    true;" >> /etc/apt/apt.conf.d/99custom && \
     apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y \
@@ -48,6 +51,9 @@ FROM node:23.3.0-slim
 
 # Install runtime dependencies
 RUN npm install -g pnpm@9.4.0 && \
+    echo "Acquire::http::Pipeline-Depth 0;" > /etc/apt/apt.conf.d/99custom && \
+    echo "Acquire::http::No-Cache true;" >> /etc/apt/apt.conf.d/99custom && \
+    echo "Acquire::BrokenProxy    true;" >> /etc/apt/apt.conf.d/99custom && \
     apt-get update && \
     apt-get install -y \
         git \
