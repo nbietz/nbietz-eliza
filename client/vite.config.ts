@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import viteCompression from "vite-plugin-compression";
+import path from "path";
 
 // Log the API URL being used
 console.log(
@@ -24,6 +25,7 @@ export default defineConfig({
         ),
     },
     clearScreen: false,
+    envDir: path.resolve(__dirname, ".."),
     build: {
         outDir: "dist",
         minify: true,
