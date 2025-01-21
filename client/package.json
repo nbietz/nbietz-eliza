@@ -8,8 +8,7 @@
         "dev": "pnpm run extract-version && vite",
         "start:client": "./start-client.sh",
         "build": "pnpm run extract-version && tsc -b && vite build",
-        "preview": "vite preview",
-        "lint": "eslint ."
+        "preview": "vite preview"
     },
     "dependencies": {
         "@elizaos/core": "workspace:*",
